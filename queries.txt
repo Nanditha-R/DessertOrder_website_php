@@ -1,0 +1,199 @@
+QUERIES
+
+1.	Queries implemented to develop functionalities of the website home page:
+
+1.	index.php
+
+Query 1:
+SELECT * FROM categories 
+WHERE active='Yes' AND featured='Yes' LIMIT 4;
+
+Query 2:
+SELECT * FROM food 
+WHERE active='Yes' AND featured='YES' LIMIT 6;
+
+
+2.	categories.php
+
+Query:
+SELECT * FROM categories 
+WHERE active='Yes';
+
+3.	food.php
+
+Query:
+SELECT * FROM food 
+WHERE active='Yes';
+
+
+
+ 
+
+
+ 
+
+4.	categoryfood.php
+
+Query 1:
+SELECT title FROM categories 
+
+WHERE category_id=$catg_id;
+
+Query 2:
+SELECT * FROM food 
+WHERE categ_id=$catg_id;
+
+
+5.	foodsearch.php
+
+Query:
+SELECT * FROM food
+WHERE title LIKE '%$search%' OR description LIKE '%$search%';
+
+
+6.	order.php
+
+Query 1:
+SELECT * FROM food
+WHERE food_id=$food_id";
+
+Query 2:
+INSERT INTO dessert_order.order 
+SET food='$food',
+price=$price,
+quantity=$quantity,
+total=$total,
+date='$order_date',
+status='$status',
+customer_name='$customer_name',
+customer_contact='$customer_contact',
+customer_email='$customer_email',
+customer_address='$customer_address'";
+
+7.	bill.php
+
+Query:
+
+SELECT * FROM dessert_order.order 
+ORDER BY order_id DESC; 
+ 
+2.	Queries implemented to develop functionalities of the website home page:
+
+1.	login.php
+
+Query:
+SELECT * FROM admin
+WHERE username='$username' AND password='$password';
+
+2.	addadmin.php
+
+Query:
+
+INSERT INTO admin SET 
+name='$name,
+username='$username',
+password='$password';
+
+3.	changepassword.php
+
+Query 1:
+
+SELECT * FROM admin
+WHERE admin_id=$admin_id 
+AND password='$current';
+
+Query 2:
+
+UPDATE admin
+SET password='$new'
+WHERE admin_id=$admin_id";
+
+4.	update.php
+
+Query 1:
+
+SELECT * FROM admin
+WHERE admin_id=$admin_id";
+
+Query 2:
+
+UPDATE admin
+SET name='$name',username='$username'
+WHERE admin_id='$admin_id';
+
+ 
+
+
+5.	deleteadmin.php
+
+Query:
+
+DELETE FROM admin
+WHERE admin_id=$admin_id;
+
+6.	addcategory.php
+
+Query:
+
+INSERT INTO categories
+SET title='$title',image_name='$image_name',featured='$featured',active='$active';
+
+7.	deletecategory.php
+
+Query:
+
+DELETE FROM categories
+WHERE category_id=$catg_id;
+
+8.	addfood.php
+
+Query:
+
+INSERT INTO food
+SET title='$title',
+description='$description',
+price=$price,
+image_name='$image_name',
+categ_id=$catg_id,
+featured='$featured',
+active='$active'";
+
+
+9.	delete.php
+
+Query:
+
+DELETE FROM food 
+WHERE food_id=$id;
+
+
+ 
+
+10.	index.php
+
+Query:
+
+CREATE VIEW CURRENT AS
+SELECT order_id,food,price,quantity,total,date
+FROM dessert_order.order
+WHERE EXISTS(
+SELECT order_id
+FROM dessert_order.order
+WHERE status='Ordered')
+ORDER BY date";
+
+
+
+The .php files consist of the php code required to develop the online dessert/food ordering website. The MySQL software has been connected to php using the XAMPP Server via the PHPMyAdmin localhost port.
+
+connections.php:
+<?php
+session_start();
+define('LOCALHOST','localhost');
+define('USERNAME','root');
+define('PASSWORD','');
+define('DB_NAME','dessert_order');
+define('HOME','http://localhost/lavender&purplewebsite/');
+$conn= mysqli_connect(LOCALHOST,USERNAME,PASSWORD) or die(mysqli_error());
+$db_select= mysqli_select_db($conn,DB_NAME) or die(mysqli_error());
+?>
